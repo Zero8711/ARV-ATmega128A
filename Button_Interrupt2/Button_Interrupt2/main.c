@@ -54,9 +54,9 @@ int main(void)
 	EIMSK = ((1 << INT0) | (1 << INT4)); //Interrupt 0, Interrupt 4
 	
 //	EICRA |= (1 << ISC00) | (1 << ISC01); //Interrupt 0 RISING EDGE
-	EICRA |= (1 << ISC01); //Interrupt 0 FALLING EDGE
-	
 //	EICRB |= (1 << ISC40) | (1 << ISC41); //Interrupt 4 RISING EDGE
+
+	EICRA |= (1 << ISC01); //Interrupt 0 FALLING EDGE
 	EICRB |= (1 << ISC41); //Interrupt 4 FALLING EDGE
 	//SREG = 0x80;  //sei();
 	sei();
