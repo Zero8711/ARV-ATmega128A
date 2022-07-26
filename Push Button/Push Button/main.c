@@ -13,13 +13,12 @@
 int main(void)
 {
 	/* Replace with your application code */
-	DDRE = 0x0F; //0b0000(버튼)0000(LED)
-	//	DDRD = 0x00; //Switch input
+//	DDRE = 0x0F; //0b0000(버튼)0000(LED)
+	DDRE = 0xF0; //0b0000(LED)0000(버튼)
 	while (1)
 	{
-		PORTE = (PINE & 0xf0) >> 4; //입력4비트를 하위4비트로 밀어줘서 LED제어
+		//PORTE = (PINE & 0xF0) >> 4; //입력4비트를 하위4비트로 밀어줘서 LED제어
+		PORTE = (PINE & 0x0F) << 4; //입력4비트를 상위4비트로 밀어줘서 LED제어
 	}
-}
-
 }
 
