@@ -47,6 +47,7 @@ int main(void)
 	DDRD = 0x00;
 	
 	EIMSK |= (1 << INT0); //Interrupt 0
+	EICRA |= (1 << ISC00) | (1 << ISC01) ; //Interrupt 0 RISING EDGE
 	EICRA |= (1 << ISC01) ; //Interrupt 0 FALLING EDGE
 	//SREG = 0x80;  //sei();
 	sei();
