@@ -21,4 +21,3 @@ int main(void)
 		PORTE = (PINE & 0x0F) << 4; //입력4비트를 상위4비트로 밀어줘서 LED제어
 	}
 }
-
