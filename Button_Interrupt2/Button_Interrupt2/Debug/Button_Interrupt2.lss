@@ -3,31 +3,31 @@ Button_Interrupt2.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000012  00800100  00000186  0000021a  2**0
+  0 .data         00000012  00800100  000001b8  0000024c  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         00000186  00000000  00000000  00000094  2**1
+  1 .text         000001b8  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .bss          00000002  00800112  00800112  0000022c  2**0
+  2 .bss          00000002  00800112  00800112  0000025e  2**0
                   ALLOC
-  3 .comment      00000030  00000000  00000000  0000022c  2**0
+  3 .comment      00000030  00000000  00000000  0000025e  2**0
                   CONTENTS, READONLY
-  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  0000025c  2**2
+  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000290  2**2
                   CONTENTS, READONLY
-  5 .debug_aranges 00000030  00000000  00000000  0000029c  2**0
+  5 .debug_aranges 00000038  00000000  00000000  000002d0  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   00000978  00000000  00000000  000002cc  2**0
+  6 .debug_info   0000098e  00000000  00000000  00000308  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 00000874  00000000  00000000  00000c44  2**0
+  7 .debug_abbrev 00000874  00000000  00000000  00000c96  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   0000033b  00000000  00000000  000014b8  2**0
+  8 .debug_line   0000035d  00000000  00000000  0000150a  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  00000058  00000000  00000000  000017f4  2**2
+  9 .debug_frame  0000007c  00000000  00000000  00001868  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    00000436  00000000  00000000  0000184c  2**0
+ 10 .debug_str    00000441  00000000  00000000  000018e4  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    0000011a  00000000  00000000  00001c82  2**0
+ 11 .debug_loc    00000163  00000000  00000000  00001d25  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000020  00000000  00000000  00001d9c  2**0
+ 12 .debug_ranges 00000028  00000000  00000000  00001e88  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -43,7 +43,7 @@ Disassembly of section .text:
    e:	00 00       	nop
   10:	5a c0       	rjmp	.+180    	; 0xc6 <__bad_interrupt>
   12:	00 00       	nop
-  14:	58 c0       	rjmp	.+176    	; 0xc6 <__bad_interrupt>
+  14:	a3 c0       	rjmp	.+326    	; 0x15c <__vector_5>
   16:	00 00       	nop
   18:	56 c0       	rjmp	.+172    	; 0xc6 <__bad_interrupt>
   1a:	00 00       	nop
@@ -116,7 +116,7 @@ Disassembly of section .text:
   98:	11 e0       	ldi	r17, 0x01	; 1
   9a:	a0 e0       	ldi	r26, 0x00	; 0
   9c:	b1 e0       	ldi	r27, 0x01	; 1
-  9e:	e6 e8       	ldi	r30, 0x86	; 134
+  9e:	e8 eb       	ldi	r30, 0xB8	; 184
   a0:	f1 e0       	ldi	r31, 0x01	; 1
   a2:	00 e0       	ldi	r16, 0x00	; 0
   a4:	0b bf       	out	0x3b, r16	; 59
@@ -140,8 +140,8 @@ Disassembly of section .text:
   bc:	a4 31       	cpi	r26, 0x14	; 20
   be:	b2 07       	cpc	r27, r18
   c0:	e1 f7       	brne	.-8      	; 0xba <.do_clear_bss_loop>
-  c2:	4c d0       	rcall	.+152    	; 0x15c <main>
-  c4:	5e c0       	rjmp	.+188    	; 0x182 <_exit>
+  c2:	63 d0       	rcall	.+198    	; 0x18a <main>
+  c4:	77 c0       	rjmp	.+238    	; 0x1b4 <_exit>
 
 000000c6 <__bad_interrupt>:
   c6:	9c cf       	rjmp	.-200    	; 0x0 <__vectors>
@@ -258,42 +258,75 @@ ISR(INT0_vect)
  158:	1f 90       	pop	r1
  15a:	18 95       	reti
 
-0000015c <main>:
+0000015c <__vector_5>:
+
+ISR(INT4_vect)
+{
+ 15c:	1f 92       	push	r1
+ 15e:	0f 92       	push	r0
+ 160:	0f b6       	in	r0, 0x3f	; 63
+ 162:	0f 92       	push	r0
+ 164:	11 24       	eor	r1, r1
+ 166:	8f 93       	push	r24
+ 168:	9f 93       	push	r25
+	count--;
+ 16a:	80 91 12 01 	lds	r24, 0x0112	; 0x800112 <__data_end>
+ 16e:	90 91 13 01 	lds	r25, 0x0113	; 0x800113 <__data_end+0x1>
+ 172:	01 97       	sbiw	r24, 0x01	; 1
+ 174:	90 93 13 01 	sts	0x0113, r25	; 0x800113 <__data_end+0x1>
+ 178:	80 93 12 01 	sts	0x0112, r24	; 0x800112 <__data_end>
+}
+ 17c:	9f 91       	pop	r25
+ 17e:	8f 91       	pop	r24
+ 180:	0f 90       	pop	r0
+ 182:	0f be       	out	0x3f, r0	; 63
+ 184:	0f 90       	pop	r0
+ 186:	1f 90       	pop	r1
+ 188:	18 95       	reti
+
+0000018a <main>:
 
 int main(void)
 {
 	DDRB = 0xFF;
- 15c:	8f ef       	ldi	r24, 0xFF	; 255
- 15e:	87 bb       	out	0x17, r24	; 23
+ 18a:	8f ef       	ldi	r24, 0xFF	; 255
+ 18c:	87 bb       	out	0x17, r24	; 23
 	DDRG = 0x0F;
- 160:	8f e0       	ldi	r24, 0x0F	; 15
- 162:	80 93 64 00 	sts	0x0064, r24	; 0x800064 <__TEXT_REGION_LENGTH__+0x7e0064>
+ 18e:	8f e0       	ldi	r24, 0x0F	; 15
+ 190:	80 93 64 00 	sts	0x0064, r24	; 0x800064 <__TEXT_REGION_LENGTH__+0x7e0064>
 	DDRD = 0x00;
- 166:	11 ba       	out	0x11, r1	; 17
+ 194:	11 ba       	out	0x11, r1	; 17
 	
-	EIMSK |= (1 << INT0); //Interrupt 0
- 168:	89 b7       	in	r24, 0x39	; 57
- 16a:	81 60       	ori	r24, 0x01	; 1
- 16c:	89 bf       	out	0x39, r24	; 57
-	EICRA |= (1 << ISC01) ; //Interrupt 0 FALLING EDGE
- 16e:	ea e6       	ldi	r30, 0x6A	; 106
- 170:	f0 e0       	ldi	r31, 0x00	; 0
- 172:	80 81       	ld	r24, Z
- 174:	82 60       	ori	r24, 0x02	; 2
- 176:	80 83       	st	Z, r24
+	EIMSK = ((1 << INT0) | (1 << INT4)); //Interrupt 0, Interrupt 4
+ 196:	81 e1       	ldi	r24, 0x11	; 17
+ 198:	89 bf       	out	0x39, r24	; 57
+	
+//	EICRA |= (1 << ISC00) | (1 << ISC01); //Interrupt 0 RISING EDGE
+	EICRA |= (1 << ISC01); //Interrupt 0 FALLING EDGE
+ 19a:	ea e6       	ldi	r30, 0x6A	; 106
+ 19c:	f0 e0       	ldi	r31, 0x00	; 0
+ 19e:	80 81       	ld	r24, Z
+ 1a0:	82 60       	ori	r24, 0x02	; 2
+ 1a2:	80 83       	st	Z, r24
+	
+//	EICRB |= (1 << ISC40) | (1 << ISC41); //Interrupt 4 RISING EDGE
+	EICRB |= (1 << ISC41); //Interrupt 4 FALLING EDGE
+ 1a4:	8a b7       	in	r24, 0x3a	; 58
+ 1a6:	82 60       	ori	r24, 0x02	; 2
+ 1a8:	8a bf       	out	0x3a, r24	; 58
 	//SREG = 0x80;  //sei();
 	sei();
- 178:	78 94       	sei
+ 1aa:	78 94       	sei
 	/* Replace with your application code */
 	while (1)
 	{
 		segment(count);
- 17a:	80 91 12 01 	lds	r24, 0x0112	; 0x800112 <__data_end>
- 17e:	a4 df       	rcall	.-184    	; 0xc8 <segment>
- 180:	fc cf       	rjmp	.-8      	; 0x17a <main+0x1e>
+ 1ac:	80 91 12 01 	lds	r24, 0x0112	; 0x800112 <__data_end>
+ 1b0:	8b df       	rcall	.-234    	; 0xc8 <segment>
+ 1b2:	fc cf       	rjmp	.-8      	; 0x1ac <main+0x22>
 
-00000182 <_exit>:
- 182:	f8 94       	cli
+000001b4 <_exit>:
+ 1b4:	f8 94       	cli
 
-00000184 <__stop_program>:
- 184:	ff cf       	rjmp	.-2      	; 0x184 <__stop_program>
+000001b6 <__stop_program>:
+ 1b6:	ff cf       	rjmp	.-2      	; 0x1b6 <__stop_program>

@@ -40,15 +40,24 @@ ISR(INT0_vect)
 	count++;
 }
 
+ISR(INT4_vect)
+{
+	count--;
+}
+
 int main(void)
 {
 	DDRB = 0xFF;
 	DDRG = 0x0F;
 	DDRD = 0x00;
 	
-	EIMSK |= (1 << INT0); //Interrupt 0
-	EICRA |= (1 << ISC00) | (1 << ISC01) ; //Interrupt 0 RISING EDGE
-	EICRA |= (1 << ISC01) ; //Interrupt 0 FALLING EDGE
+	EIMSK = ((1 << INT0) | (1 << INT4)); //Interrupt 0, Interrupt 4
+	
+//	EICRA |= (1 << ISC00) | (1 << ISC01); //Interrupt 0 RISING EDGE
+	EICRA |= (1 << ISC01); //Interrupt 0 FALLING EDGE
+	
+//	EICRB |= (1 << ISC40) | (1 << ISC41); //Interrupt 4 RISING EDGE
+	EICRB |= (1 << ISC41); //Interrupt 4 FALLING EDGE
 	//SREG = 0x80;  //sei();
 	sei();
 	/* Replace with your application code */
