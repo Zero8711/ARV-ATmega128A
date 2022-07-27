@@ -10,8 +10,6 @@
 #include <util/delay.h>
 #include <avr/interrupt.h>
 
-//void r_segment(int);
-//void l_segment(int);
 unsigned char r_tcnt = 0, r_mcnt = 0;
 unsigned char l_tcnt = 0, l_mcnt = 0;
 
