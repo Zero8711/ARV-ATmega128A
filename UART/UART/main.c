@@ -22,7 +22,6 @@ void UART0_transmit(char data)
 uint8_t UART0_receive(void)
 {
 	while(!(UCSR0A & (1 << RXC1)));
-	
 	return UDR0;
 }
 
