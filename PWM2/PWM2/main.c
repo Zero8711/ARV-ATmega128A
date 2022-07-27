@@ -12,7 +12,7 @@
 
 //void r_segment(int);
 //void l_segment(int);
-unsigned char r_tcnt =0, r_mcnt = 0;
+unsigned char r_tcnt = 0, r_mcnt = 0;
 unsigned char l_tcnt = 0, l_mcnt = 0;
 
 unsigned char font[] = {0x3f, 0x06, 0x5b, 0x4f,
