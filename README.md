@@ -5,4 +5,4 @@ Examples of ATmega128A
 * block Diagram
 ![block](./pic/block.jpg)
 * HANBACK HBE-MCU_Multi II -ST
-![block](./pic/HBE-MCU_Multi II -ST.jpg)
+![block](./pic/target_board.jpg)
