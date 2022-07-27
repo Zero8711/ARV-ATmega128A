@@ -1,4 +1,8 @@
 # ARV-ATmega128A
 Examples of ATmega128A
 ## target board
-* HANBACK HBE_MCU_Multi II -ST
+* HANBACK HBE_MCU_Multi II -ST 
+* block Diagram
+![block](./pic/block.jpg)
+* HANBACK HBE-MCU_Multi II -ST
+![block](./pic/HBE-MCU_Multi II -ST.jpg)
